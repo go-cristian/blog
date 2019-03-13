@@ -1,0 +1,23 @@
+@font-face {
+  font-family: NeueHansKendrick-ExtraBold;
+  src: url("fonts/neuehanskendrick-extrabold.ttf");
+}
+
+@font-face {
+  font-family: NeueHansKendrick-Medium;
+  src: url("fonts/neuehanskendrick-medium.ttf");
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}
