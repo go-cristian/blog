@@ -68,24 +68,46 @@ export const doLogin = () => (
 
   dispatch(login());
 
-  let token = "8e8b044c78b1303efedda85e4261e70bb03d4dd5";
+  //https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=http://localhost:3000&scope=gist
 
-  return fetch(`https://api.github.com/user?access_token=${token}`)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error(response.statusText);
-      }
-    })
-    .then(json => json as GistUser)
-    .then(
-      user =>
-        new Session(token, {
-          name: user.login,
-          avatarUrl: user.avatar_url,
-          nick: user.login
+  let code = new URL(window.location.href).searchParams.get("code");
+
+  if (code == undefined) throw new Error("No code on github auth.");
+
+  let proxyUrl = "https://cors-anywhere.herokuapp.com/";
+  let targetUrl = "https://github.com/login/oauth/access_token";
+
+  let data = new FormData();
+  data.append("client_id", "fb60535dac0bced1e8f5");
+  data.append("client_secret", "88232f5d90c4a2dd537c8cfb2da6213bdaf0fd3e");
+  data.append("code", code);
+
+  let params: RequestInit = {
+    body: data,
+    method: "POST"
+  };
+
+  return fetch(proxyUrl + targetUrl, params)
+    .then(response => response.text())
+    .then(text => text.split("=")[1].split("&")[0])
+    .then(token =>
+      fetch(`https://api.github.com/user?access_token=${token}`)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(response.statusText);
+          }
         })
+        .then(json => json as GistUser)
+        .then(
+          user =>
+            new Session(token, {
+              name: user.login,
+              avatarUrl: user.avatar_url,
+              nick: user.login
+            })
+        )
     )
     .then((session: Session) => dispatch(loginSuccess(session)))
     .catch((error: Error) => dispatch(loginFailed(error)));
