@@ -1,9 +1,10 @@
 import { Result } from "../data/models";
+
 import {
-  SearchAction,
   DO_SEARCH,
+  SEARCH_FAILURE,
   SEARCH_SUCCESS,
-  SEARCH_FAILURE
+  SearchAction
 } from "./searchActions";
 
 export interface SearchState {

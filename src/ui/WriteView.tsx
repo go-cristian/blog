@@ -1,10 +1,11 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { State } from "State";
-import { connect } from "react-redux";
 
-import { doSave, doReset } from "../../write/writeActions";
-import { Input, Container, Button, Title, Text, Area } from "./styles";
+import { doReset, doSave } from "../write/writeActions";
+
+import { Area, Button, Container, Input, Text, Title } from "./styles";
 
 interface ThisState {
   title: string;
@@ -49,25 +50,24 @@ class WriteView extends React.Component<Props, ThisState> {
   render() {
     if (this.props.isLoading) {
       return <p>Loading...</p>;
-    } else {
-      return (
-        <Container>
-          <Title>New Post</Title>
-          <Text>
-            Explore the unknown. Uncover what matters. Prototype, test, repeat.
-            Combine intuition with evidence. Design with intent and build it
-            right.
-          </Text>
-          <Input
-            type="text"
-            onChange={this.handleChangeTitle}
-            placeholder="Title"
-          />
-          <Area onChange={this.handleChangeContent} placeholder="Text" />
-          <Button onClick={this.save}>Publish</Button>
-        </Container>
-      );
     }
+    return (
+      <Container>
+        <Title>New Post</Title>
+        <Text>
+          Explore the unknown. Uncover what matters. Prototype, test, repeat.
+          Combine intuition with evidence. Design with intent and build it
+          right.
+        </Text>
+        <Input
+          type="text"
+          onChange={this.handleChangeTitle}
+          placeholder="Title"
+        />
+        <Area onChange={this.handleChangeContent} placeholder="Text" />
+        <Button onClick={this.save}>Publish</Button>
+      </Container>
+    );
   }
 }
 

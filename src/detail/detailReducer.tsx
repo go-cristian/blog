@@ -1,9 +1,10 @@
 import { GistContent } from "../data/models";
+
 import {
   DetailAction,
   DO_REQUEST,
-  REQUEST_DETAIL_SUCCESS,
-  REQUEST_DETAIL_FAILURE
+  REQUEST_DETAIL_FAILURE,
+  REQUEST_DETAIL_SUCCESS
 } from "./detailActions";
 
 export interface DetailState {

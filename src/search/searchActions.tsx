@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
 import { State } from "State";
-import { Gist, Result, User, GistSchema, GistUserSchema } from "../data/models";
+
+import { fetchGists, fetchUser } from "../data/api";
+import { Gist, GistSchema, GistUserSchema, Result, User } from "../data/models";
 
 export type SearchAction =
   | RequestSearchAction
@@ -14,7 +16,7 @@ export interface RequestSearchAction {
 }
 const search = (searchTerm: string): RequestSearchAction => ({
   type: DO_SEARCH,
-  searchTerm: searchTerm
+  searchTerm
 });
 
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
@@ -24,7 +26,7 @@ export interface RequestSuccessSearchAction {
 }
 const searchSuccess = (results?: Result): RequestSuccessSearchAction => ({
   type: SEARCH_SUCCESS,
-  results: results
+  results
 });
 
 export const SEARCH_FAILURE = "SEARCH_FAILURE";
@@ -37,61 +39,49 @@ const searchFailure = (error: Error): RequestFailureSearchAction => ({
   error: error.message
 });
 
-const map = (gistUser: GistUserSchema, schema: GistSchema[]): Result => {
-  if (schema.length > 0) {
+export const doSearch = (searchTerm: string) => (
+  dispatch: Dispatch<SearchAction>,
+  getState: () => State
+) => {
+  dispatch(search(searchTerm));
+  return fetchResults(searchTerm)
+    .then((result?: Result) => dispatch(searchSuccess(result)))
+    .catch((error: Error) => dispatch(searchFailure(error)));
+};
+
+const fetchResults = (nick: string): Promise<Result> => {
+  const all: [Promise<GistUserSchema>, Promise<GistSchema[]>] = [
+    fetchUser(nick),
+    fetchGists(nick)
+  ];
+  return Promise.all(all).then(([user, gists]) => join(user, gists));
+};
+
+const join = (gistUser: GistUserSchema, gists: GistSchema[]): Result => {
+  if (gists.length > 0) {
     const user: User = {
       name: gistUser.name,
       avatarUrl: gistUser.avatar_url,
       nick: gistUser.login
     };
 
-    const posts: Gist[] = schema.map((item: GistSchema) => {
-      let keys = Object.keys(item.files);
-      return {
-        id: item.id,
-        date: new Date(item.created_at),
-        title: item.files[keys[0]].filename,
-        contentUrl: item.files[keys[0]].raw_url,
-        user: user
-      };
-    });
-    const result: Result = {
-      user: user,
-      posts: posts
-    };
+    const posts: Gist[] = gists.map((item: GistSchema) => gistFrom(user, item));
 
-    return result;
-  } else {
-    throw new Error("No user found");
+    return {
+      user,
+      posts
+    };
   }
+  throw new Error("No user found");
 };
 
-export const doSearch = (searchTerm: string) => (
-  dispatch: Dispatch<SearchAction>,
-  getState: () => State
-) => {
-  dispatch(search(searchTerm));
-  return fetch(`https://api.github.com/users/${searchTerm}`)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error(response.statusText);
-      }
-    })
-    .then(json => json as GistUserSchema)
-    .then(user => {
-      return fetch(`https://api.github.com/users/${searchTerm}/gists`)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(response.statusText);
-          }
-        })
-        .then(json => json as GistSchema[])
-        .then(schema => map(user, schema));
-    })
-    .then((result?: Result) => dispatch(searchSuccess(result)))
-    .catch((error: Error) => dispatch(searchFailure(error)));
+const gistFrom = (user: User, gist: GistSchema): Gist => {
+  const keys = Object.keys(gist.files);
+  return {
+    id: gist.id,
+    date: new Date(gist.created_at),
+    title: gist.files[keys[0]].filename,
+    contentUrl: gist.files[keys[0]].raw_url,
+    user
+  };
 };

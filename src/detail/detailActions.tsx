@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import { State } from "State";
+
 import { Gist, GistContent } from "../data/models";
 
 export type DetailAction =
@@ -14,7 +15,7 @@ export interface RequestDetailAction {
 }
 const request = (id: string): RequestDetailAction => ({
   type: DO_REQUEST,
-  id: id
+  id
 });
 
 export const REQUEST_DETAIL_SUCCESS = "REQUEST_DETAIL_SUCCESS";
@@ -30,9 +31,9 @@ const requestSuccess = (
   nextId?: string
 ): RequestSuccessDetailAction => ({
   type: REQUEST_DETAIL_SUCCESS,
-  gist: gist,
-  previousId: previousId,
-  nextId: nextId
+  gist,
+  previousId,
+  nextId
 });
 
 export const REQUEST_DETAIL_FAILURE = "REQUEST_DETAIL_FAILURE";
@@ -57,38 +58,43 @@ export const requestGist = (id: string) => (
     let previous: string | undefined;
     let next: string | undefined;
     let gist: Gist | undefined;
-    let array = state.search.result.posts;
-    for (var i = 0; i < array.length; i++) {
-      let value = array[i];
+    const array = state.search.result.posts;
+    for (let i = 0; i < array.length; i = i + 1) {
+      const value = array[i];
       if (value.id === id) {
         gist = value;
-        if (i > 0) previous = array[i - 1].id;
-        if (i < array.length - 1) next = array[i + 1].id;
+        if (i > 0) {
+          previous = array[i - 1].id;
+        }
+        if (i < array.length - 1) {
+          next = array[i + 1].id;
+        }
         break;
       }
     }
 
-    if (gist == undefined) throw new Error("Id not found");
+    if (gist === undefined) {
+      throw new Error("Id not found");
+    }
 
     return fetch(gist.contentUrl)
       .then(response => {
         if (response.ok) {
           return response.text();
-        } else {
-          throw new Error(response.statusText);
         }
+        throw new Error(response.statusText);
       })
       .then(content => {
-        let gistContent: GistContent = {
+        const gistContent: GistContent = {
           title: gist!!.title,
-          content: content,
+          content,
           date: new Date(gist!!.date),
           owner: gist!!.user
         };
         return gistContent;
       })
-      .then((gist: GistContent) =>
-        dispatch(requestSuccess(gist, next, previous))
+      .then((gistContent: GistContent) =>
+        dispatch(requestSuccess(gistContent, next, previous))
       )
       .catch((error: Error) => dispatch(requestFailure(error)));
   } else {

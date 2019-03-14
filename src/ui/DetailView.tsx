@@ -1,14 +1,15 @@
-import * as React from "react";
 import * as moment from "moment";
+import * as React from "react";
+import * as ReactMarkdown from "react-markdown";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import * as ReactMarkdown from "react-markdown";
-
-import { Container, Title, Text, UserContainer, Avatar } from "./styles";
-import { GistContent } from "../../data/models";
-import { State } from "../../State";
-import { requestGist } from "../../detail/detailActions";
 import { Link } from "react-router-dom";
+
+import { GistContent } from "../data/models";
+import { requestGist } from "../detail/detailActions";
+import { State } from "../State";
+
+import { Avatar, Container, Text, Title, UserContainer } from "./styles";
 
 interface RouteInfo {
   id: string;
@@ -34,7 +35,7 @@ class DetailView extends React.Component<Props> {
         </Container>
       );
     }
-    if (this.props.rawGist == undefined) {
+    if (this.props.rawGist === undefined) {
       return (
         <Container>
           <Text>No Info Available</Text>

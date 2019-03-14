@@ -27,7 +27,7 @@ export class Session {
   }
 
   valid: () => boolean = () =>
-    this.token != null && this.token != undefined && this.token.length > 0;
+    this.token != null && this.token !== undefined && this.token.length > 0;
 }
 
 export interface User {

@@ -1,11 +1,10 @@
 import { combineReducers, Reducer } from "redux";
-
-import authReducer from "./auth/authReducer";
 import { State } from "State";
 
-import { writeReducer } from "./write/writeReducer";
-import { searchReducer } from "./search/searchReducer";
+import authReducer from "./auth/authReducer";
 import { detailReducer } from "./detail/detailReducer";
+import { searchReducer } from "./search/searchReducer";
+import { writeReducer } from "./write/writeReducer";
 
 const rootReducer: Reducer<State> = combineReducers({
   auth: authReducer,

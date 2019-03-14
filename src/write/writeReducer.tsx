@@ -1,9 +1,9 @@
 import {
-  SaveGistAction,
   DO_SAVE_GIST,
-  SAVE_SUCCESS,
+  RESET,
   SAVE_FAILURE,
-  RESET
+  SAVE_SUCCESS,
+  SaveGistAction
 } from "./writeActions";
 
 export interface WriteState {

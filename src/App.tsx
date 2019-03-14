@@ -1,20 +1,19 @@
 import * as React from "react";
 import {
   Route,
+  RouteComponentProps,
   Switch,
-  withRouter,
-  RouteComponentProps
+  withRouter
 } from "react-router-dom";
-
-import Toolbar from "./ui/components/Toolbar";
-import SearchView from "./ui/components/SearchView";
-import MeView from "./ui/components/MeView";
-import WriteView from "./ui/components/WriteView";
 import styled from "styled-components";
-import DetailView from "./ui/components/DetailView";
 
 import background from "./public/images/background.png";
-import PrivateRoute from "./ui/components/PrivateRoute";
+import DetailView from "./ui/DetailView";
+import MeView from "./ui/MeView";
+import PrivateRoute from "./ui/PrivateRoute";
+import SearchView from "./ui/SearchView";
+import Toolbar from "./ui/Toolbar";
+import WriteView from "./ui/WriteView";
 
 const Background = styled.div`
   background: url(${background});

@@ -1,0 +1,42 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-airbnb",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
+  },
+  "rules": {
+    "member-access": [true, "no-public"],
+    "ordered-imports": {
+      "severity": "warn",
+      "options": [{ "grouped-imports": true }]
+    },
+    "object-literal-sort-keys": false,
+    "interface-name": false,
+    "no-inferrable-types": [true, "ignore-params", "ignore-properties"],
+    "typedef": [
+      true,
+      "parameter",
+      "property-declaration",
+      "member-variable-declaration"
+    ],
+    "no-string-literal": false,
+    "no-empty": false,
+    "variable-name": false,
+
+    "import-name": false,
+    "prefer-array-literal": [
+      true,
+      {
+        "allow-type-parameters": true
+      }
+    ],
+    "object-shorthand-properties-first": false,
+
+    "jsx-boolean-value": false,
+    "jsx-no-lambda": false
+  }
+}

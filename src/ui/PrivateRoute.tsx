@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
-import { State } from "../../State";
+import { State } from "../State";
 
 interface Props {
   component: React.ComponentType<any>;
@@ -37,7 +37,7 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = (state: State) => ({
-  isAuthenticated: state.auth.session != undefined
+  isAuthenticated: state.auth.session !== undefined
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

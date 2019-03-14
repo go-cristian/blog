@@ -1,5 +1,7 @@
 import { Dispatch } from "react";
-import { State } from "State";
+
+import { fetchCreateGist } from "../data/api";
+import { State } from "../State";
 
 export type SaveGistAction =
   | DoSaveGistAction
@@ -15,8 +17,8 @@ export interface DoSaveGistAction {
 }
 const saveGist = (title: string, content: string): DoSaveGistAction => ({
   type: DO_SAVE_GIST,
-  title: title,
-  content: content
+  title,
+  content
 });
 
 export const SAVE_SUCCESS = "SAVE_SUCCESS";
@@ -51,29 +53,21 @@ export const doSave = (title: string, content: string) => (
 ) => {
   const state = getState();
 
+  dispatch(saveGist(title, content));
+
   if (state.write.isLoading) {
     return Promise.resolve();
   }
 
-  dispatch(saveGist(title, content));
-
   if (state.auth.session) {
-    let file: any = {};
-    file[title] = { content: content };
-    let obj = { public: true, files: file };
-    let token = state.auth.session.token;
-    let params = {
-      body: JSON.stringify(obj),
-      method: "POST"
-    };
-    return fetch(`https://api.github.com/gists?access_token=${token}`, params)
+    const token = state.auth.session.token;
+    return fetchCreateGist(token, title, content)
       .then(() => dispatch(gistSaved()))
       .catch((error: Error) => dispatch(gistNotSaved(error)));
-  } else {
-    return Promise.resolve().then(() =>
-      dispatch(gistNotSaved(new Error("No session available")))
-    );
   }
+  return Promise.resolve().then(() =>
+    dispatch(gistNotSaved(new Error("No session available")))
+  );
 };
 
 export const doReset = () => (

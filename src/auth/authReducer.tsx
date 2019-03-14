@@ -1,13 +1,13 @@
-import {
-  DO_LOGIN,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  DO_LOGOUT,
-  LOGOUT_SUCCESS,
-  AuthAction
-} from "./authActions";
-
 import { Session } from "../data/models";
+
+import {
+  AuthAction,
+  DO_LOGIN,
+  DO_LOGOUT,
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS
+} from "./authActions";
 
 export interface AuthState {
   session?: Session;

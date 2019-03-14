@@ -78,13 +78,15 @@
     "redux-mock-store": "^1.5.3",
     "svg-inline-loader": "^0.8.0",
     "ts-loader": "^4.4.2",
-    "tslint": "^5.13.1",
+    "tslint": "^5.14.0",
     "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run build"
     }
   },
   "lint-staged": {
@@ -93,7 +95,7 @@
       "git add"
     ],
     "src/**/*.{ts,tsx}": [
-      "tslint --fix",
+      "tslint --fix --project tsconfig.json",
       "git add"
     ]
   }

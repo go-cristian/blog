@@ -1,5 +1,7 @@
 import { Dispatch } from "redux";
 import { State } from "State";
+
+import { fetchAccessToken, fetchSession } from "../data/api";
 import { Session } from "../data/models";
 
 export type AuthAction =
@@ -24,7 +26,7 @@ export interface LoginSuccessAction {
 }
 export const loginSuccess = (session: Session): LoginSuccessAction => ({
   type: LOGIN_SUCCESS,
-  session: session
+  session
 });
 
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
@@ -51,64 +53,28 @@ const logoutSuccess = (): LogoutSuccessAction => ({
   type: LOGOUT_SUCCESS
 });
 
-interface GistUser {
-  login: string;
-  avatar_url: string;
-}
-
 export const doLogin = () => (
   dispatch: Dispatch<AuthAction>,
   getState: () => State
 ) => {
   const state = getState();
 
+  dispatch(login());
+
   if (state.auth.isLoading) {
     return Promise.resolve();
   }
 
-  dispatch(login());
+  // https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=http://localhost:3000&scope=gist
 
-  //https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=http://localhost:3000&scope=gist
+  const code = new URL(window.location.href).searchParams.get("code");
 
-  let code = new URL(window.location.href).searchParams.get("code");
+  if (code === undefined) {
+    throw new Error("No code on github auth.");
+  }
 
-  if (code == undefined) throw new Error("No code on github auth.");
-
-  let proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  let targetUrl = "https://github.com/login/oauth/access_token";
-
-  let data = new FormData();
-  data.append("client_id", "fb60535dac0bced1e8f5");
-  data.append("client_secret", "88232f5d90c4a2dd537c8cfb2da6213bdaf0fd3e");
-  data.append("code", code);
-
-  let params: RequestInit = {
-    body: data,
-    method: "POST"
-  };
-
-  return fetch(proxyUrl + targetUrl, params)
-    .then(response => response.text())
-    .then(text => text.split("=")[1].split("&")[0])
-    .then(token =>
-      fetch(`https://api.github.com/user?access_token=${token}`)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(response.statusText);
-          }
-        })
-        .then(json => json as GistUser)
-        .then(
-          user =>
-            new Session(token, {
-              name: user.login,
-              avatarUrl: user.avatar_url,
-              nick: user.login
-            })
-        )
-    )
+  return fetchAccessToken(code!!)
+    .then(fetchSession)
     .then((session: Session) => dispatch(loginSuccess(session)))
     .catch((error: Error) => dispatch(loginFailed(error)));
 };

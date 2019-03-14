@@ -1,21 +1,21 @@
+import * as moment from "moment";
 import * as React from "react";
 import { connect } from "react-redux";
-import * as moment from "moment";
 import { RouteComponentProps, withRouter } from "react-router";
-
-import { Gist, Result } from "../../data/models";
-import { doSearch } from "../../search/searchActions";
 import { State } from "State";
 
+import { Gist, Result } from "../data/models";
+import { doSearch } from "../search/searchActions";
+
 import {
-  UserContainer,
   Avatar,
-  Text,
+  Button,
   Container,
-  GistView,
   GistLeft,
   GistRight,
-  Button
+  GistView,
+  Text,
+  UserContainer
 } from "./styles";
 
 interface Props extends RouteComponentProps {

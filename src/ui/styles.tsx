@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
 
-import searchIcon from "../../public/images/search.png";
+import searchIcon from "../public/images/search.png";
 
 interface TextProps {
   small?: boolean;
@@ -130,14 +130,6 @@ export const Button = styled.button`
 
 export const UserContainer = styled.div``;
 
-export const Avatar = styled.img`
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  float: left;
-  margin-right: 20px;
-`;
-
 export const GistView = styled(Link)`
   display: flex;
   flex-direction: row;
@@ -158,4 +150,83 @@ export const GistRight = styled.div`
   @media (max-width: 480px) {
     display: none;
   }
+`;
+
+export const Fixed = styled.div`
+  background: white;
+  position: fixed;
+  top: 0px;
+  right: 0;
+  left: 0;
+  z-index: 9999;
+  display: block;
+  margin: 0;
+  padding-top: 10px;
+  width: 100%;
+  height: 48px;
+  user-select: none;
+`;
+
+export const ToolbarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+  @media (max-width: 980px) {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+`;
+
+interface ToolbarButtonProps {
+  toRight?: boolean;
+}
+
+export const ToolbarButton = styled.button`
+  font-family: NeueHansKendrick-ExtraBold;
+  font-size: 18px;
+  color: #666666;
+  letter-spacing: 0;
+  text-align: right;
+  border: 0;
+  border-bottom: 4px solid #1d1fdd;
+  background: transparent;
+
+  ${(props: ToolbarButtonProps) =>
+    props.toRight &&
+    css`
+      margin-left: auto;
+    `}
+`;
+
+export const Logo = styled.img`
+  width: 108px;
+  height: 24px;
+`;
+
+export const Avatar = styled.img`
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+`;
+
+export const Name = styled.p`
+  font-family: Helvetica;
+  font-size: 16px;
+  color: #000000;
+  letter-spacing: 0;
+  margin-left: 0.5em;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
+`;
+
+export const LinkContainer = styled(Link)`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 1em;
 `;
