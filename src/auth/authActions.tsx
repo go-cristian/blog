@@ -53,7 +53,7 @@ const logoutSuccess = (): LogoutSuccessAction => ({
   type: LOGOUT_SUCCESS
 });
 
-export const doLogin = () => (
+export const doLogin = (code: string) => (
   dispatch: Dispatch<AuthAction>,
   getState: () => State
 ) => {
@@ -63,14 +63,6 @@ export const doLogin = () => (
 
   if (state.auth.isLoading) {
     return Promise.resolve();
-  }
-
-  // https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=http://localhost:3000&scope=gist
-
-  const code = new URL(window.location.href).searchParams.get("code");
-
-  if (code === undefined) {
-    throw new Error("No code on github auth.");
   }
 
   return fetchAccessToken(code!!)

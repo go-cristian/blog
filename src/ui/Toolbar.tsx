@@ -7,6 +7,7 @@ import { doLogin, doLogout } from "../auth/authActions";
 import { Session } from "../data/models";
 import logo from "../public/images/logo.png";
 
+import PopupWindow from "./PopupWindow";
 import {
   Avatar,
   Fixed,
@@ -19,12 +20,20 @@ import {
 
 interface Props {
   session?: Session;
-  doLogin: () => any;
+  doLogin: (code: string) => any;
   doLogout: () => any;
   isLoading?: boolean;
 }
 
 class Toolbar extends React.Component<Props> {
+  doLogin = () => {
+    PopupWindow.open(
+      "github-oauth-authorize",
+      "https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=http://localhost:3000/code&scope=gist",
+      { height: 500, width: 500 }
+    ).then((code: string) => this.props.doLogin(code));
+  };
+
   render() {
     if (this.props.isLoading) {
       return <p>Loading</p>;
@@ -51,7 +60,7 @@ class Toolbar extends React.Component<Props> {
           <Link to="/">
             <Logo src={String(logo)} />
           </Link>
-          <ToolbarButton toRight onClick={this.props.doLogin}>
+          <ToolbarButton toRight onClick={this.doLogin}>
             Sign In
           </ToolbarButton>
         </ToolbarContainer>
