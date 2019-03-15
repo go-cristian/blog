@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { State } from "State";
 
-import { fetchGists, fetchUser } from "../data/api";
-import { Gist, GistSchema, GistUserSchema, Result, User } from "../data/models";
+import { fetchGists, fetchUser } from "../api";
+import { Gist, GistSchema, GistUserSchema, Result, User } from "../models";
+import { State } from "../State";
 
 export type SearchAction =
   | RequestSearchAction

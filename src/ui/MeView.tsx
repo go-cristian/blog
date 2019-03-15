@@ -1,22 +1,13 @@
-import * as moment from "moment";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { State } from "State";
 
-import { Gist, Result } from "../data/models";
-import { doSearch } from "../search/searchActions";
+import { Result } from "../data/models";
+import { doSearch } from "../data/search/searchActions";
+import { State } from "../data/State";
 
-import {
-  Avatar,
-  Button,
-  Container,
-  GistLeft,
-  GistRight,
-  GistView,
-  Text,
-  UserContainer
-} from "./styles";
+import { Avatar, Button, Container, Text, UserContainer } from "./styles";
+import PostListItem from "./widgets/PostListItem";
 
 interface Props extends RouteComponentProps {
   username: string;
@@ -47,36 +38,14 @@ class MeView extends React.Component<Props> {
             </UserContainer>
 
             <Button onClick={this.createNew}>Create New Post</Button>
-            {this.props.result.posts.map((gist: Gist) => (
-              <GistView to={`/gist/${gist.id}`} key={gist.id}>
-                <GistLeft>
-                  <p>
-                    <Text small>
-                      {moment(gist.date).format("MMMM DD / YYYY")} •
-                    </Text>
-                    <Text small colored>
-                      {moment(gist.date)
-                        .startOf("hour")
-                        .fromNow()}
-                    </Text>
-                    <br />
-                    <Text big>{gist.title}</Text>
-                  </p>
-                </GistLeft>
-                <GistRight>
-                  <Text big colored>
-                    Read
-                  </Text>
-                </GistRight>
-              </GistView>
-            ))}
+            <PostListItem posts={this.props.result.posts} />
           </Container>
         );
       } else {
         results = <div>No Results</div>;
       }
     } else {
-      results = <div>Cargando...</div>;
+      results = <div>Loading...</div>;
     }
 
     return <div>{results}</div>;

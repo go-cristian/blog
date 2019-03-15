@@ -13,7 +13,7 @@ import MeView from "./ui/MeView";
 import PrivateRoute from "./ui/PrivateRoute";
 import SearchView from "./ui/SearchView";
 import Toolbar from "./ui/Toolbar";
-import WriteView from "./ui/WriteView";
+import WritePostView from "./ui/WritePostView";
 
 const Background = styled.div`
   background: url(${background});
@@ -59,7 +59,7 @@ class App extends React.Component<RouteComponentProps> {
             />
             <PrivateRoute exact path="/me" component={MeView} />
             )} />
-            <PrivateRoute exact path="/write" component={WriteView} />
+            <PrivateRoute exact path="/write" component={WritePostView} />
           </Switch>
         </Container>
       </Background>

@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-import { fetchCreateGist } from "../data/api";
+import { fetchCreateGist } from "../api";
 import { State } from "../State";
 
 export type SaveGistAction =

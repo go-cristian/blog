@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
+import { requestGist } from "../data/detail/detailActions";
 import { GistContent } from "../data/models";
-import { requestGist } from "../detail/detailActions";
-import { State } from "../State";
+import { State } from "../data/State";
 
 import { Arrow, Avatar, Container, Text, Title, UserContainer } from "./styles";
 

@@ -1,4 +1,4 @@
-import { Result } from "../data/models";
+import { Result } from "../models";
 
 import {
   DO_SEARCH,

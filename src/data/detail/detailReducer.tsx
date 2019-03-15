@@ -1,4 +1,4 @@
-import { GistContent } from "../data/models";
+import { GistContent } from "../models";
 
 import {
   DetailAction,

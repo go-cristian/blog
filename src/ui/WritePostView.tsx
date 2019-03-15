@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { State } from "State";
 
-import { doReset, doSave } from "../write/writeActions";
+import { State } from "../data/State";
+import { doReset, doSave } from "../data/write/writeActions";
 
 import { Area, Button, Container, Input, Text, Title } from "./styles";
 

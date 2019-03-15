@@ -1,23 +1,20 @@
-import * as moment from "moment";
 import * as React from "react";
 import { connect } from "react-redux";
-import { State } from "State";
 
-import { Gist, Result } from "../data/models";
-import { doSearch } from "../search/searchActions";
+import { Result } from "../data/models";
+import { doSearch } from "../data/search/searchActions";
+import { State } from "../data/State";
 
 import {
   Avatar,
   Button,
   Container,
-  GistLeft,
-  GistRight,
-  GistView,
   SearchBox,
   Text,
   Title,
   UserContainer
 } from "./styles";
+import PostListItem from "./widgets/PostListItem";
 
 interface Props {
   result?: Result;
@@ -63,26 +60,7 @@ class SearchView extends React.Component<Props, ThisState> {
           <Text colored>Posts</Text>
         </UserContainer>
       );
-      resultsView = this.props.result.posts.map((gist: Gist) => (
-        <GistView to={`/gist/${gist.id}`} key={gist.id}>
-          <GistLeft>
-            <Text small>{moment(gist.date).format("MMMM DD / YYYY")} •</Text>
-            <Text small colored>
-              {moment(gist.date)
-                .startOf("hour")
-                .fromNow()}
-            </Text>
-            <p>
-              <Text big>{gist.title}</Text>
-            </p>
-          </GistLeft>
-          <GistRight>
-            <Text big colored>
-              Read
-            </Text>
-          </GistRight>
-        </GistView>
-      ));
+      resultsView = <PostListItem posts={this.props.result.posts} />;
     }
 
     return (

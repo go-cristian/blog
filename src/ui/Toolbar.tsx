@@ -1,11 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { State } from "State";
 
-import { doLogin, doLogout } from "../auth/authActions";
+import { doLogin, doLogout } from "../data/auth/authActions";
 import { getEnv } from "../data/environment";
 import { Session } from "../data/models";
+import { State } from "../data/State";
 import logo from "../public/images/logo.png";
 
 import PopupWindow from "./PopupWindow";

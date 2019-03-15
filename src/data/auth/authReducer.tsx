@@ -1,4 +1,4 @@
-import { Session } from "../data/models";
+import { Session } from "../models";
 
 import {
   AuthAction,

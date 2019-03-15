@@ -1,8 +1,8 @@
+import { State } from "data/State";
 import { Dispatch } from "redux";
-import { State } from "State";
 
-import { fetchAccessToken, fetchSession } from "../data/api";
-import { Session } from "../data/models";
+import { fetchAccessToken, fetchSession } from "../api";
+import { Session } from "../models";
 
 export type AuthAction =
   | DoLoginAction

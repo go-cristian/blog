@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { State } from "State";
 
-import { Gist, GistContent } from "../data/models";
+import { Gist, GistContent } from "../models";
+import { State } from "../State";
 
 export type DetailAction =
   | RequestDetailAction
