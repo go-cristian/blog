@@ -25,13 +25,17 @@ interface Props {
   isLoading?: boolean;
 }
 
+interface Code {
+  code: string;
+}
+
 class Toolbar extends React.Component<Props> {
   doLogin = () => {
     PopupWindow.open(
       "github-oauth-authorize",
-      "https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=http://localhost:3000/code&scope=gist",
+      `https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=http://localhost:3000/code&scope=gist`,
       { height: 500, width: 500 }
-    ).then((code: string) => this.props.doLogin(code));
+    ).then((code: Code) => this.props.doLogin(code.code));
   };
 
   render() {
