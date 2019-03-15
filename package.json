@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "lint": "tslint --project tsconfig.json",
     "predeploy": "npm run build",
-    "deploy": "firebase deploy"
+    "deploy": "firebase use default && firebase deploy --token=$FIREBASE_TOKEN --non-interactive"
   },
   "repository": "git+https://github.com/iyubinest/blog.git",
   "keywords": [
