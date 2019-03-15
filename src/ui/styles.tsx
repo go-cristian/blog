@@ -206,6 +206,19 @@ export const Logo = styled.img`
   height: 24px;
 `;
 
+interface ArrowProps {
+  inverted?: boolean;
+}
+
+export const Arrow = styled.img`
+  margin: 20px;
+  ${(props: ArrowProps) =>
+    props.inverted &&
+    css`
+      transform: rotate(180deg);
+    `}
+`;
+
 export const Avatar = styled.img`
   border-radius: 50%;
   width: 42px;

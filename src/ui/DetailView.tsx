@@ -9,7 +9,9 @@ import { GistContent } from "../data/models";
 import { requestGist } from "../detail/detailActions";
 import { State } from "../State";
 
-import { Avatar, Container, Text, Title, UserContainer } from "./styles";
+import { Arrow, Avatar, Container, Text, Title, UserContainer } from "./styles";
+
+const navIcon = "../public/images/prev.png";
 
 interface RouteInfo {
   id: string;
@@ -65,11 +67,11 @@ class DetailView extends React.Component<Props> {
           <Text colored>Posts</Text>
         </UserContainer>
         <p>
-          <Link to={`/gist/${this.props.nextId}`}>
-            <Text>Previous</Text>
-          </Link>
           <Link to={`/gist/${this.props.previousId}`}>
-            <Text>Next</Text>
+            <Arrow src={String(navIcon)} />
+          </Link>
+          <Link to={`/gist/${this.props.nextId}`}>
+            <Arrow inverted src={String(navIcon)} />
           </Link>
         </p>
       </Container>

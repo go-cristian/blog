@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development --hot --progress --color --port 3000 --open",
-    "build": "webpack -p --progress --colors",
+    "start": "NODE_ENV=local webpack-dev-server --mode development --hot --progress --color --port 3000 --open",
+    "build": "webpack --config ./webpack.config.js -p --progress --colors",
+    "build:local": "NODE_ENV=local npm run build",
+    "build:production": "NODE_ENV=production npm run build",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "lint": "tslint --project tsconfig.json",
     "predeploy": "npm run build",

@@ -1,3 +1,4 @@
+import { getEnv } from "./environment";
 import { GistSchema, GistUserSchema, Session } from "./models";
 
 const GET_SESSION_URL = "https://api.github.com/user?access_token=";
@@ -8,8 +9,9 @@ const CREATE_GIST_URL = "https://api.github.com/gists?access_token=";
 
 export const fetchAccessToken = (code: string): Promise<string> => {
   const data = new FormData();
-  data.append("client_id", "fb60535dac0bced1e8f5");
-  data.append("client_secret", "88232f5d90c4a2dd537c8cfb2da6213bdaf0fd3e");
+  const env = getEnv();
+  data.append("client_id", env.id);
+  data.append("client_secret", env.secret);
   data.append("code", code);
 
   const params: RequestInit = {

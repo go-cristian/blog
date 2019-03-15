@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { State } from "State";
 
 import { doLogin, doLogout } from "../auth/authActions";
+import { getEnv } from "../data/environment";
 import { Session } from "../data/models";
 import logo from "../public/images/logo.png";
 
@@ -29,11 +30,14 @@ interface Code {
   code: string;
 }
 
+const GITHUB_LOGIN_URL = "https://github.com/login/oauth/authorize";
+
 class Toolbar extends React.Component<Props> {
   doLogin = () => {
+    const env = getEnv();
     PopupWindow.open(
       "github-oauth-authorize",
-      `https://github.com/login/oauth/authorize?client_id=fb60535dac0bced1e8f5&redirect_uri=${
+      `${GITHUB_LOGIN_URL}?client_id=${env.id}&redirect_uri=${
         window.location.href
       }code&scope=gist`,
       { height: 500, width: 500 }
