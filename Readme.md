@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/iyubinest/blog/tree/master.svg?style=svg)](https://circleci.com/gh/iyubinest/blog/tree/master)
+
 # CODE CHALLENGE SOLUTION
 
 ### Matter Supply / Outpost Industries
@@ -11,17 +13,16 @@ The challenge was developed using ReactJS, Redux, Webpack, and Typescript. The t
 ## Know issues
 
 - UI is still very different from the designs.
-- Login token is hardcoded (shame).
 - When going home is still persisting the last search.
-- When going directly to a gist detail it crashes.
+- When going directly to a gist detail url it crashes.
 - No session persistence.
-- In production routes are not working as expected, it can be something with firebase.
-- No CI implemented.
 - No tests.
 
 ## Challenge
 
-The challenge at this moment is practically done there are some issues and UI improvements that surely I wanted to do.
+The challenge at this moment is practically done there are some issues and UI improvements that surely I wanted to do, also the design of the model for searching and having a session is different from the expected.
+
+The architecture needs a change because the searches are different from the profile and the "writing" part is away from the user and this can be merged.
 
 ## Requirements
 
@@ -56,8 +57,8 @@ Feel quite fine about this if testing on Chrome, away from that not sure how it 
 
 ## Delivery
 
-You can see this shit running locally by doing `npm run start` or you can go to `https://blog-29a6b.firebaseapp.com`.
+You can see this shit running locally by doing `npm install && npm run start` or you can go to `https://blog-29a6b.firebaseapp.com`.
 
 ## Thanks
 
-Thanks in advance for every comment. Please don't look so much at the "actions", that part is garbage, see how Promises are a complete nightmare to understand.
+Thanks in advance for every comment.
