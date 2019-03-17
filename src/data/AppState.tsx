@@ -3,7 +3,7 @@ import { DetailState } from "./detail/detailReducer";
 import { SearchState } from "./search/searchReducer";
 import { WriteState } from "./write/writeReducer";
 
-export interface State {
+export interface AppState {
   auth: AuthState;
   search: SearchState;
   write: WriteState;

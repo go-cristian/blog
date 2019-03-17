@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 
 import { fetchCreateGist } from "../api";
-import { State } from "../State";
+import { AppState } from "../AppState";
 
 export type SaveGistAction =
   | DoSaveGistAction
@@ -49,7 +49,7 @@ const reset = (): SaveGistResetAction => ({
 
 export const doSave = (title: string, content: string) => (
   dispatch: Dispatch<SaveGistAction>,
-  getState: () => State
+  getState: () => AppState
 ) => {
   const state = getState();
 
@@ -72,7 +72,7 @@ export const doSave = (title: string, content: string) => (
 
 export const doReset = () => (
   dispatch: Dispatch<SaveGistAction>,
-  getState: () => State
+  getState: () => AppState
 ) => {
   return Promise.resolve().then(() => dispatch(reset()));
 };

@@ -2,13 +2,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { AppState } from "../data/AppState";
 import { doLogin, doLogout } from "../data/auth/authActions";
 import { getEnv } from "../data/environment";
 import { Session } from "../data/models";
-import { State } from "../data/State";
 import logo from "../public/images/logo.png";
 
-import PopupWindow from "./PopupWindow";
 import {
   Avatar,
   Fixed,
@@ -18,6 +17,7 @@ import {
   ToolbarButton,
   ToolbarContainer
 } from "./styles";
+import PopupWindow from "./widgets/PopupWindow";
 
 interface Props {
   session?: Session;
@@ -79,7 +79,7 @@ class Toolbar extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: AppState) => ({
   session: state.auth.session,
   isLoading: state.auth.isLoading
 });

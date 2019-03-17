@@ -5,11 +5,17 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-import { requestGist } from "../data/detail/detailActions";
-import { GistContent } from "../data/models";
-import { State } from "../data/State";
-
-import { Arrow, Avatar, Container, Text, Title, UserContainer } from "./styles";
+import { AppState } from "../../data/AppState";
+import { requestGist } from "../../data/detail/detailActions";
+import { GistContent } from "../../data/models";
+import {
+  Arrow,
+  Avatar,
+  Container,
+  Text,
+  Title,
+  UserContainer
+} from "../styles";
 
 const navIcon = "../public/images/prev.png";
 
@@ -25,7 +31,7 @@ interface Props extends RouteComponentProps<RouteInfo> {
   requestGist: (id: string) => any;
 }
 
-class DetailView extends React.Component<Props> {
+class DetailScreen extends React.Component<Props> {
   componentDidMount() {
     this.props.requestGist(this.props.location.pathname.split("/")[2]);
   }
@@ -57,9 +63,7 @@ class DetailView extends React.Component<Props> {
           </Text>
         </p>
         <Title>{this.props.rawGist.title}</Title>
-        <p>
-          <ReactMarkdown source={this.props.rawGist.content} />
-        </p>
+        <ReactMarkdown source={this.props.rawGist.content} />
         <UserContainer>
           <Avatar src={this.props.rawGist.owner.avatarUrl} />
           <Text big>{this.props.rawGist.owner.name}</Text>
@@ -79,7 +83,7 @@ class DetailView extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: AppState) => ({
   isLoading: state.detail.isLoading,
   rawGist: state.detail.gist,
   previousId: state.detail.previousId,
@@ -92,5 +96,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(DetailView)
+  )(DetailScreen)
 );

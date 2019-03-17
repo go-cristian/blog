@@ -2,12 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 
-import { Result } from "../data/models";
-import { doSearch } from "../data/search/searchActions";
-import { State } from "../data/State";
-
-import { Avatar, Button, Container, Text, UserContainer } from "./styles";
-import PostListItem from "./widgets/PostListItem";
+import { AppState } from "../../data/AppState";
+import { Result } from "../../data/models";
+import { doSearch } from "../../data/search/searchActions";
+import { Avatar, Button, Container, Text, UserContainer } from "../styles";
+import PostListItem from "../widgets/PostListItem";
 
 interface Props extends RouteComponentProps {
   username: string;
@@ -15,7 +14,7 @@ interface Props extends RouteComponentProps {
   doSearch: (searchTerm: string) => any;
 }
 
-class MeView extends React.Component<Props> {
+class MeScreen extends React.Component<Props> {
   createNew = () => {
     this.props.history.push("write");
   };
@@ -52,7 +51,7 @@ class MeView extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: AppState) => ({
   username: state.auth.session!!.user.name,
   result: state.search.result
 });
@@ -63,5 +62,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(MeView)
+  )(MeScreen)
 );

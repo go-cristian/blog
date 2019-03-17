@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 
 import { fetchGists, fetchUser } from "../api";
+import { AppState } from "../AppState";
 import { Gist, GistSchema, GistUserSchema, Result, User } from "../models";
-import { State } from "../State";
 
 export type SearchAction =
   | RequestSearchAction
@@ -41,7 +41,7 @@ const searchFailure = (error: Error): RequestFailureSearchAction => ({
 
 export const doSearch = (searchTerm: string) => (
   dispatch: Dispatch<SearchAction>,
-  getState: () => State
+  getState: () => AppState
 ) => {
   dispatch(search(searchTerm));
   return fetchResults(searchTerm)

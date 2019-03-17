@@ -17,6 +17,7 @@ The challenge was developed using ReactJS, Redux, Webpack, and Typescript. The t
 - When going directly to a gist detail url it crashes.
 - No session persistence.
 - No tests.
+- Error Management. Errors thrown but not shown "¯\(ツ)/¯"
 
 ## Challenge
 

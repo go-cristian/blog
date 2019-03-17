@@ -1,4 +1,4 @@
-import { State } from "data/State";
+import { AppState } from "data/AppState";
 import { Dispatch } from "redux";
 
 import { fetchAccessToken, fetchSession } from "../api";
@@ -55,7 +55,7 @@ const logoutSuccess = (): LogoutSuccessAction => ({
 
 export const doLogin = (code: string) => (
   dispatch: Dispatch<AuthAction>,
-  getState: () => State
+  getState: () => AppState
 ) => {
   const state = getState();
 
@@ -73,7 +73,7 @@ export const doLogin = (code: string) => (
 
 export const doLogout = () => (
   dispatch: Dispatch<AuthAction>,
-  getState: () => State
+  getState: () => AppState
 ) => {
   const state = getState();
   if (state.auth.isLoading) {

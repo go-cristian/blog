@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 
+import { AppState } from "../AppState";
 import { Gist, GistContent } from "../models";
-import { State } from "../State";
 
 export type DetailAction =
   | RequestDetailAction
@@ -48,7 +48,7 @@ const requestFailure = (error: Error): RequestFailureDetailAction => ({
 
 export const requestGist = (id: string) => (
   dispatch: Dispatch<DetailAction>,
-  getState: () => State
+  getState: () => AppState
 ) => {
   const state = getState();
 

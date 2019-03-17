@@ -2,12 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 
-import { State } from "../data/State";
-import { doReset, doSave } from "../data/write/writeActions";
+import { AppState } from "../../data/AppState";
+import { doReset, doSave } from "../../data/write/writeActions";
+import { Area, Button, Container, Input, Text, Title } from "../styles";
 
-import { Area, Button, Container, Input, Text, Title } from "./styles";
-
-interface ThisState {
+interface State {
   title: string;
   content: string;
 }
@@ -19,7 +18,7 @@ interface Props extends RouteComponentProps {
   doReset: () => any;
 }
 
-class WriteView extends React.Component<Props, ThisState> {
+class PostScreen extends React.Component<Props, State> {
   handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ ...this.state, title: event.target.value });
   };
@@ -71,7 +70,7 @@ class WriteView extends React.Component<Props, ThisState> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: AppState) => ({
   isLoading: state.write.isLoading,
   completed: state.write.completed
 });
@@ -82,5 +81,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(WriteView)
+  )(PostScreen)
 );

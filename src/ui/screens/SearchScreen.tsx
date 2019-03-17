@@ -1,10 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { Result } from "../data/models";
-import { doSearch } from "../data/search/searchActions";
-import { State } from "../data/State";
-
+import { AppState } from "../../data/AppState";
+import { Result } from "../../data/models";
+import { doSearch } from "../../data/search/searchActions";
 import {
   Avatar,
   Button,
@@ -13,8 +12,8 @@ import {
   Text,
   Title,
   UserContainer
-} from "./styles";
-import PostListItem from "./widgets/PostListItem";
+} from "../styles";
+import PostListItem from "../widgets/PostListItem";
 
 interface Props {
   result?: Result;
@@ -23,11 +22,11 @@ interface Props {
   doSearch: (searchTerm: string) => any;
 }
 
-interface ThisState {
+interface State {
   searchTerm: string;
 }
 
-class SearchView extends React.Component<Props, ThisState> {
+class SearchScreen extends React.Component<Props, State> {
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchTerm: event.target.value });
   };
@@ -84,7 +83,7 @@ class SearchView extends React.Component<Props, ThisState> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: AppState) => ({
   result: state.search.result,
   isLoading: state.search.isLoading,
   error: state.search.error
@@ -95,4 +94,4 @@ const mapDispatchToProps = { doSearch };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchView);
+)(SearchScreen);

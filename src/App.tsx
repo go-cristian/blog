@@ -8,12 +8,12 @@ import {
 import styled from "styled-components";
 
 import background from "./public/images/background.png";
-import DetailView from "./ui/DetailView";
-import MeView from "./ui/MeView";
 import PrivateRoute from "./ui/PrivateRoute";
-import SearchView from "./ui/SearchView";
+import DetailView from "./ui/screens/DetailScreen";
+import MeView from "./ui/screens/MeScreen";
+import WritePostView from "./ui/screens/PostScreen";
+import SearchScreen from "./ui/screens/SearchScreen";
 import Toolbar from "./ui/Toolbar";
-import WritePostView from "./ui/WritePostView";
 
 const Background = styled.div`
   background: url(${background});
@@ -47,7 +47,7 @@ class App extends React.Component<RouteComponentProps> {
               exact
               path="/"
               component={(props: any) => (
-                <SearchView timestamp={new Date().toString()} {...props} />
+                <SearchScreen timestamp={new Date().toString()} {...props} />
               )}
             />
             <Route
